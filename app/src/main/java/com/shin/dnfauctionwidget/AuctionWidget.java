@@ -30,15 +30,8 @@ import java.net.URL;
  */
 public class AuctionWidget extends AppWidgetProvider {
 
-    static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
-                                int appWidgetId) {
-
-        CharSequence widgetText = context.getString(R.string.appwidget_text);
-        // Construct the RemoteViews object
+    static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.auction_widget);
-        views.setTextViewText(R.id.appwidget_text, widgetText);
-
-        // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }
 
@@ -65,9 +58,11 @@ public class AuctionWidget extends AppWidgetProvider {
                                 JSONObject firstRow = rowsArray.getJSONObject(0);
 
                                 Integer unitPrice = firstRow.getInt("unitPrice");
+                                Integer avgPrice = firstRow.getInt("averagePrice");
 
                                 // 위젯에 텍스트 설정
-                                remoteViews.setTextViewText(R.id.appwidget_text, unitPrice.toString());
+                                remoteViews.setTextViewText(R.id.auction_minPrice, unitPrice.toString());
+                                remoteViews.setTextViewText(R.id.auction_avgPrice, avgPrice.toString());
 
                                 // 위젯 업데이트
                                 appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
