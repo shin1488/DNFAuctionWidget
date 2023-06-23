@@ -8,7 +8,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.util.DisplayMetrics;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RemoteViews;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -27,6 +31,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+
 public class AuctionWidget extends AppWidgetProvider {
 
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
@@ -41,7 +48,7 @@ public class AuctionWidget extends AppWidgetProvider {
             // 위젯 레이아웃 설정
             RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.auction_widget);
 
-            String itemName = "균열의 단편";
+            String itemName = "[6월]프리미엄 클론 레어 아바타 풀세트 상자";
 
             //이미지 삽입
             remoteViews.setImageViewResource(R.id.gold1, R.drawable.gold);
@@ -87,7 +94,7 @@ public class AuctionWidget extends AppWidgetProvider {
     }
 
     private void performApiRequest(Context context, int appWidgetId) {
-        String itemName = "균열의 단편";
+        String itemName = "[6월]프리미엄 클론 레어 아바타 풀세트 상자";
         String apiKey = context.getString(R.string.api_Key);
 
         // API 요청
@@ -151,11 +158,12 @@ public class AuctionWidget extends AppWidgetProvider {
 
                             Integer unitPrice = firstRow.getInt("unitPrice");
                             Integer avgPrice = firstRow.getInt("averagePrice");
+                            NumberFormat numberFormat = new DecimalFormat("#,###");
 
                             // 위젯에 텍스트 설정
                             RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.auction_widget);
-                            remoteViews.setTextViewText(R.id.auction_minPrice, unitPrice.toString());
-                            remoteViews.setTextViewText(R.id.auction_avgPrice, avgPrice.toString());
+                            remoteViews.setTextViewText(R.id.auction_minPrice, numberFormat.format(unitPrice));
+                            remoteViews.setTextViewText(R.id.auction_avgPrice, numberFormat.format(avgPrice));
 
                             // 위젯 업데이트
                             AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
