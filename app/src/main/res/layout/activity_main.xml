@@ -9,6 +9,16 @@
     tools:context=".MainActivity"
     android:id="@+id/main_layout">
 
+    <ImageView
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/logo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/main_edittext"/>
+
+
     <EditText
         android:hint="아이템 이름을 입력해 주세요."
         android:lines="1"
