@@ -41,19 +41,19 @@ public class AuctionWidget extends AppWidgetProvider {
             // 위젯 레이아웃 설정
             RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.auction_widget);
 
-            // ImageButton에 클릭 리스너 설정
-            Intent intent = new Intent(context, AuctionWidget.class);
-            intent.setAction("Refresh");
-            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
-            remoteViews.setOnClickPendingIntent(R.id.refresh_button, pendingIntent);
-
             String itemName = "균열의 단편";
 
             //이미지 삽입
             remoteViews.setImageViewResource(R.id.gold1, R.drawable.gold);
             remoteViews.setImageViewResource(R.id.gold2, R.drawable.gold);
             remoteViews.setTextViewText(R.id.item_name, itemName);
+
+            // ImageButton에 클릭 리스너 설정
+            Intent intent = new Intent(context, AuctionWidget.class);
+            intent.setAction("Refresh");
+            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
+            remoteViews.setOnClickPendingIntent(R.id.refresh_button, pendingIntent);
 
             //api 요청
             performApiRequest(context, appWidgetId);
