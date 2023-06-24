@@ -20,8 +20,11 @@
 
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/auction_widget_info" />
+                android:resource="@xml/auction_widget_info"/>
         </receiver>
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-6134407886790967~8924562234"/>
 
         <activity
             android:name=".MainActivity"
