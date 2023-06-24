@@ -3,7 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/back_button.xml" value="0.2601851851851852" />
+        <entry key="app/src/main/res/layout/activity_search_result.xml" value="0.14907407407407408" />
         <entry key="app/src/main/res/layout/auction_widget.xml" value="0.14907407407407408" />
+        <entry key="app/src/main/res/layout/result_recycler_layout.xml" value="0.13703140830800406" />
       </map>
     </option>
   </component>
