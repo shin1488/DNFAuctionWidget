@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -48,11 +49,20 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder
     public class ViewHolder extends RecyclerView.ViewHolder {
         private ImageView imageView;
         private TextView textView;
+        private CardView itemCard;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.item_image);
             textView = itemView.findViewById(R.id.item_text);
+            itemCard = itemView.findViewById(R.id.item_card);
+
+            itemCard.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+                }
+            });
         }
 
         public void bind(Item item) {

@@ -74,7 +74,7 @@ public class SearchResultActivity extends AppCompatActivity {
                                     String itemID = row.getString("itemId");
                                     String imageUrl = "https://img-api.neople.co.kr/df/items/" + itemID;
                                     String itemName = row.getString("itemName");
-                                    Item item = new Item(imageUrl, itemName);
+                                    Item item = new Item(imageUrl, itemName, itemID);
                                     itemList.add(item);
                                     adapter.notifyDataSetChanged();
                                 }
