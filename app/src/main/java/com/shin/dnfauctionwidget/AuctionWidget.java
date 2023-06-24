@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RemoteViews;
@@ -35,6 +36,7 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
 public class AuctionWidget extends AppWidgetProvider {
+    private static final String ACTION_REFRESH_CLICK = "android.appwidget.action.APPWIDGET_UPDATE";
 
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.auction_widget);
@@ -48,7 +50,7 @@ public class AuctionWidget extends AppWidgetProvider {
             // 위젯 레이아웃 설정
             RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.auction_widget);
 
-            String itemName = "[6월]프리미엄 클론 레어 아바타 풀세트 상자";
+            String itemName = "무결점 골든 베릴";
 
             //이미지 삽입
             remoteViews.setImageViewResource(R.id.gold1, R.drawable.gold);
@@ -56,10 +58,9 @@ public class AuctionWidget extends AppWidgetProvider {
             remoteViews.setTextViewText(R.id.item_name, itemName);
 
             // ImageButton에 클릭 리스너 설정
-            Intent intent = new Intent(context, AuctionWidget.class);
-            intent.setAction("Refresh");
+            Intent intent = new Intent(ACTION_REFRESH_CLICK);
             intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
             remoteViews.setOnClickPendingIntent(R.id.refresh_button, pendingIntent);
 
             //api 요청
@@ -84,7 +85,7 @@ public class AuctionWidget extends AppWidgetProvider {
     public void onReceive(Context context, Intent intent) {
         super.onReceive(context, intent);
 
-        if (intent.getAction().equals("Refresh")) { // 액션 이름에 따라 처리
+        if (intent.getAction().equals(ACTION_REFRESH_CLICK)) { // 액션 이름에 따라 처리
             // ImageButton가 클릭되었을 때 실행할 함수 호출
             int appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
             if (appWidgetId != AppWidgetManager.INVALID_APPWIDGET_ID) {
@@ -94,8 +95,9 @@ public class AuctionWidget extends AppWidgetProvider {
     }
 
     private void performApiRequest(Context context, int appWidgetId) {
-        String itemName = "[6월]프리미엄 클론 레어 아바타 풀세트 상자";
+        String itemName = "무결점 골든 베릴";
         String apiKey = context.getString(R.string.api_Key);
+        System.out.println("refresh");
 
         // API 요청
         String requestURL1 = "https://api.neople.co.kr/df/items?itemName=";
@@ -157,6 +159,7 @@ public class AuctionWidget extends AppWidgetProvider {
                             JSONObject firstRow = rowsArray.getJSONObject(0);
 
                             Integer unitPrice = firstRow.getInt("unitPrice");
+                            Log.d("price", unitPrice.toString());
                             Integer avgPrice = firstRow.getInt("averagePrice");
                             NumberFormat numberFormat = new DecimalFormat("#,###");
 
