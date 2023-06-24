@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -67,21 +69,35 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder
                     int position = getAdapterPosition();
                     if (position != RecyclerView.NO_POSITION) {
 
-                        // 로컬 저장소에 변수 저장을 위한 SharedPreferences 객체 생성
-                        SharedPreferences sharedPreferences = itemView.getContext().getSharedPreferences("SavedItem", Context.MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        AlertDialog.Builder builder = new AlertDialog.Builder(itemView.getContext());
+                        builder.setMessage(itemList.get(position).getItemName() + "(으)로 저장하시겠습니까?")
+                                .setPositiveButton("네", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        // 로컬 저장소에 변수 저장을 위한 SharedPreferences 객체 생성
+                                        SharedPreferences sharedPreferences = itemView.getContext().getSharedPreferences("SavedItem", Context.MODE_PRIVATE);
+                                        SharedPreferences.Editor editor = sharedPreferences.edit();
 
-                        editor.clear();
+                                        editor.clear();
 
-                        // 변수 값 저장
-                        editor.putString("itemId", itemList.get(position).getItemId());
-                        editor.putString("itemName", itemList.get(position).getItemName());
+                                        // 변수 값 저장
+                                        editor.putString("itemId", itemList.get(position).getItemId());
+                                        editor.putString("itemName", itemList.get(position).getItemName());
 
-                        // 변경 사항을 적용
-                        editor.apply();
+                                        // 변경 사항을 적용
+                                        editor.apply();
 
-                        //액티비티 종료
-                       ((Activity) itemView.getContext()).finish();
+                                        //액티비티 종료
+                                        ((Activity) itemView.getContext()).finish();
+                                    }
+                                })
+                                .setNegativeButton("아니오", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        //do_nothing
+                                    }
+                                })
+                                .show();
                 }
             }});
         }

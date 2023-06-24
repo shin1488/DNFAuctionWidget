@@ -179,7 +179,6 @@ public class AuctionWidget extends AppWidgetProvider {
                                 JSONObject firstRow = rowsArray.getJSONObject(0);
 
                                 Integer unitPrice = firstRow.getInt("unitPrice");
-                                Log.d("price", unitPrice.toString());
                                 Integer avgPrice = firstRow.getInt("averagePrice");
                                 NumberFormat numberFormat = new DecimalFormat("#,###");
 
