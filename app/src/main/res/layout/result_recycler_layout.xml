@@ -6,7 +6,7 @@
     android:id="@+id/result_recycler_layout">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/item_card"
+        android:id="@+id/recycler_item_card"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:cardCornerRadius="0dp"
@@ -20,7 +20,7 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/item_image"
+                android:id="@+id/recycler_item_image"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginStart="20dp"
@@ -29,7 +29,7 @@
                 app:layout_constraintStart_toStartOf="parent"/>
 
             <TextView
-                android:id="@+id/item_text"
+                android:id="@+id/recycler_item_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -39,7 +39,7 @@
                 android:textStyle="bold"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/item_image"/>
+                app:layout_constraintStart_toEndOf="@+id/recycler_item_image"/>
 
             <TextView
                 android:layout_width="match_parent"

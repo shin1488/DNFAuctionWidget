@@ -6,6 +6,7 @@ import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.util.DisplayMetrics;
@@ -32,11 +33,23 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
 public class AuctionWidget extends AppWidgetProvider {
     private static final String ACTION_REFRESH_CLICK = "android.appwidget.action.APPWIDGET_UPDATE";
+
+    private String getItemId(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("SavedItem", Context.MODE_PRIVATE);
+        return sharedPreferences.getString("itemId", "a072ded7b41743a22cccb74cd73bc24d");
+    }
+
+    private String getItemName(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("SavedItem", Context.MODE_PRIVATE);
+        return sharedPreferences.getString("itemName", "무결점 골든 베릴");
+    }
 
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.auction_widget);
@@ -50,7 +63,7 @@ public class AuctionWidget extends AppWidgetProvider {
             // 위젯 레이아웃 설정
             RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.auction_widget);
 
-            String itemName = "무결점 골든 베릴";
+            String itemName = getItemName(context);
 
             //이미지 삽입
             remoteViews.setImageViewResource(R.id.gold1, R.drawable.gold);
@@ -95,13 +108,18 @@ public class AuctionWidget extends AppWidgetProvider {
     }
 
     private void performApiRequest(Context context, int appWidgetId) {
-        String itemName = "무결점 골든 베릴";
+        String encodeItemName = "";
+        try {
+            encodeItemName = URLEncoder.encode(getItemName(context), "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        String itemName = getItemName(context);
         String apiKey = context.getString(R.string.api_Key);
-        System.out.println("refresh");
 
         // API 요청
         String requestURL1 = "https://api.neople.co.kr/df/items?itemName=";
-        String finalURL1 = requestURL1 + itemName + "&apikey=" + apiKey;
+        String finalURL1 = requestURL1 + encodeItemName + "&apikey=" + apiKey;
         JsonObjectRequest jsonObjectRequest1 = new JsonObjectRequest(Request.Method.GET, finalURL1, null,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -123,10 +141,11 @@ public class AuctionWidget extends AppWidgetProvider {
                                             // 비트맵 이미지를 RemoteViews에 설정
                                             RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.auction_widget);
                                             remoteViews.setImageViewBitmap(R.id.item_image, resource);
+                                            remoteViews.setTextViewText(R.id.item_name, itemName);
 
                                             // 위젯 업데이트
                                             AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-                                            appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
+                                            appWidgetManager.updateAppWidget(appWidgetId, remoteViews);;
                                         }
 
                                         @Override
@@ -148,7 +167,7 @@ public class AuctionWidget extends AppWidgetProvider {
                 });
 
         String requestURL2 = "https://api.neople.co.kr/df/auction?&limit=400&sort=unitPrice:asc&itemName=";
-        String finalURL2 = requestURL2 + itemName + "&apikey=" + apiKey;
+        String finalURL2 = requestURL2 + encodeItemName + "&apikey=" + apiKey;
         JsonObjectRequest jsonObjectRequest2 = new JsonObjectRequest(Request.Method.GET, finalURL2, null,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -156,21 +175,32 @@ public class AuctionWidget extends AppWidgetProvider {
                         try {
                             // JSON 데이터 파싱
                             JSONArray rowsArray = response.getJSONArray("rows");
-                            JSONObject firstRow = rowsArray.getJSONObject(0);
+                            if(rowsArray.length() != 0) {
+                                JSONObject firstRow = rowsArray.getJSONObject(0);
 
-                            Integer unitPrice = firstRow.getInt("unitPrice");
-                            Log.d("price", unitPrice.toString());
-                            Integer avgPrice = firstRow.getInt("averagePrice");
-                            NumberFormat numberFormat = new DecimalFormat("#,###");
+                                Integer unitPrice = firstRow.getInt("unitPrice");
+                                Log.d("price", unitPrice.toString());
+                                Integer avgPrice = firstRow.getInt("averagePrice");
+                                NumberFormat numberFormat = new DecimalFormat("#,###");
 
-                            // 위젯에 텍스트 설정
-                            RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.auction_widget);
-                            remoteViews.setTextViewText(R.id.auction_minPrice, numberFormat.format(unitPrice));
-                            remoteViews.setTextViewText(R.id.auction_avgPrice, numberFormat.format(avgPrice));
+                                // 위젯에 텍스트 설정
+                                RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.auction_widget);
+                                remoteViews.setTextViewText(R.id.auction_minPrice, numberFormat.format(unitPrice));
+                                remoteViews.setTextViewText(R.id.auction_avgPrice, numberFormat.format(avgPrice));
 
-                            // 위젯 업데이트
-                            AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-                            appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
+                                // 위젯 업데이트
+                                AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+                                appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
+                            } else {
+                                // 위젯에 텍스트 설정
+                                RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.auction_widget);
+                                remoteViews.setTextViewText(R.id.auction_minPrice, "0");
+                                remoteViews.setTextViewText(R.id.auction_avgPrice, "0");
+
+                                // 위젯 업데이트
+                                AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+                                appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
+                            }
                         } catch (JSONException e) {
                             e.printStackTrace();
                             Toast.makeText(context, "JSON Parsing Error", Toast.LENGTH_SHORT).show();

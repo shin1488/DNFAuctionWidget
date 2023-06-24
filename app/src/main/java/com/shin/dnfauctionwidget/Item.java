@@ -2,12 +2,12 @@ package com.shin.dnfauctionwidget;
 
 public class Item {
     private String imageUrl;
-    private String text;
+    private String itemName;
     private String itemId;
 
-    public Item(String imageUrl, String text, String itemId) {
+    public Item(String imageUrl, String itemName, String itemId) {
         this.imageUrl = imageUrl;
-        this.text = text;
+        this.itemName = itemName;
         this.itemId = itemId;
     }
 
@@ -15,8 +15,8 @@ public class Item {
         return imageUrl;
     }
 
-    public String getText() {
-        return text;
+    public String getItemName() {
+        return itemName;
     }
 
     public String getItemId() { return itemId; }

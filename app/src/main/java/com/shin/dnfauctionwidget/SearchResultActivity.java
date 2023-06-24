@@ -38,6 +38,9 @@ public class SearchResultActivity extends AppCompatActivity {
         binding = ActivitySearchResultBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        int paddingBottom = getNavigationBarHeight();
+        binding.resultRecycler.setPadding(0, 0, 0, paddingBottom);
+
         Intent intent = getIntent();
         String inputText = intent.getStringExtra("inputText");
 
@@ -107,4 +110,12 @@ public class SearchResultActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
     }
 
+    private int getNavigationBarHeight() {
+        int result = 0;
+        int resourceId = getResources().getIdentifier("navigation_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            result = getResources().getDimensionPixelSize(resourceId);
+        }
+        return result;
+    }
 }

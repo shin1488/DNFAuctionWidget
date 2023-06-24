@@ -1,6 +1,10 @@
 package com.shin.dnfauctionwidget;
 
+import android.app.Activity;
 import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
@@ -47,22 +51,39 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private ImageView imageView;
-        private TextView textView;
+        private ImageView itemImage;
+        private TextView itemName;
         private CardView itemCard;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            imageView = itemView.findViewById(R.id.item_image);
-            textView = itemView.findViewById(R.id.item_text);
-            itemCard = itemView.findViewById(R.id.item_card);
+            itemImage = itemView.findViewById(R.id.recycler_item_image);
+            itemName = itemView.findViewById(R.id.recycler_item_name);
+            itemCard = itemView.findViewById(R.id.recycler_item_card);
 
             itemCard.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+
+                        // 로컬 저장소에 변수 저장을 위한 SharedPreferences 객체 생성
+                        SharedPreferences sharedPreferences = itemView.getContext().getSharedPreferences("SavedItem", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                        editor.clear();
+
+                        // 변수 값 저장
+                        editor.putString("itemId", itemList.get(position).getItemId());
+                        editor.putString("itemName", itemList.get(position).getItemName());
+
+                        // 변경 사항을 적용
+                        editor.apply();
+
+                        //액티비티 종료
+                       ((Activity) itemView.getContext()).finish();
                 }
-            });
+            }});
         }
 
         public void bind(Item item) {
@@ -73,7 +94,7 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder
                     .into(new CustomTarget<Bitmap>() {
                         @Override
                         public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
-                            imageView.setImageBitmap(resource);
+                            itemImage.setImageBitmap(resource);
                         }
 
                         @Override
@@ -82,7 +103,7 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder
                         }
                     });
             // 텍스트 설정
-            textView.setText(item.getText());
+            itemName.setText(item.getItemName());
         }
     }
 }
