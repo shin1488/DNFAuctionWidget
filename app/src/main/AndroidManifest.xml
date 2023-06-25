@@ -3,6 +3,7 @@
     package="com.shin.dnfauctionwidget">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="com.google.android.gms.permission.AD_ID"/>
 
     <application
         android:allowBackup="true"
@@ -11,9 +12,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.DNFAuctionWidget">
-        <activity android:name=".SearchResultActivity"></activity>
+        <activity android:name=".SearchResultActivity"/>
 
-        <receiver android:name=".AuctionWidget">
+        <receiver android:name=".AuctionWidget"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -28,7 +30,8 @@
 
         <activity
             android:name=".MainActivity"
-            android:theme="@style/Theme.DNFAuctionWidget">
+            android:theme="@style/Theme.DNFAuctionWidget"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
