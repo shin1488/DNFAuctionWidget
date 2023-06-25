@@ -25,6 +25,7 @@
         android:textSize="12dp"
         android:textColor="@color/white"
         android:textStyle="bold"
+        android:text="아이템"
         android:layout_marginBottom="2dp"
         android:layout_alignBottom="@+id/item_image"
         android:layout_toRightOf="@+id/item_image"/>
@@ -57,6 +58,7 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="3dp"
         android:layout_marginBottom="1dp"
+        android:src="@drawable/gold"
         android:layout_below="@+id/min_price_text"/>
 
     <TextView
@@ -68,6 +70,7 @@
         android:textColor="@color/white"
         android:textStyle="bold"
         android:layout_toRightOf="@id/gold1"
+        android:text="0"
         android:layout_alignBottom="@+id/gold1"/>
 
     <TextView
@@ -89,6 +92,7 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="3dp"
         android:layout_marginBottom="1dp"
+        android:src="@drawable/gold"
         android:layout_below="@id/avg_price_text"/>
 
     <TextView
@@ -100,5 +104,6 @@
         android:textColor="@color/white"
         android:textStyle="bold"
         android:layout_toRightOf="@+id/gold2"
+        android:text="0"
         android:layout_alignBottom="@+id/gold2"/>
 </RelativeLayout>

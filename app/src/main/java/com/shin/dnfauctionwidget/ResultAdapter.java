@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +22,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
+import com.bumptech.glide.annotation.GlideModule;
+import com.bumptech.glide.module.AppGlideModule;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
 
@@ -74,6 +76,7 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder
                                 .setPositiveButton("네", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
+                                        Log.d("saved", "saved");
                                         // 로컬 저장소에 변수 저장을 위한 SharedPreferences 객체 생성
                                         SharedPreferences sharedPreferences = itemView.getContext().getSharedPreferences("SavedItem", Context.MODE_PRIVATE);
                                         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -104,7 +107,7 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder
 
         public void bind(Item item) {
             // 이미지 로드
-            Glide.with(itemView.getContext())
+            GlideApp.with(itemView.getContext())
                     .asBitmap()
                     .load(item.getImageUrl())
                     .into(new CustomTarget<Bitmap>() {

@@ -26,7 +26,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.bumptech.glide.Glide;
+import com.bumptech.glide.annotation.GlideModule;
+import com.bumptech.glide.module.AppGlideModule;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
 import org.json.JSONArray;
@@ -58,22 +59,18 @@ public class AuctionWidget extends AppWidgetProvider {
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        // There may be multiple widgets active, so update all of them
         for (int appWidgetId : appWidgetIds) {
             // 위젯 레이아웃 설정
             RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.auction_widget);
 
             String itemName = getItemName(context);
 
-            //이미지 삽입
-            remoteViews.setImageViewResource(R.id.gold1, R.drawable.gold);
-            remoteViews.setImageViewResource(R.id.gold2, R.drawable.gold);
             remoteViews.setTextViewText(R.id.item_name, itemName);
 
             // ImageButton에 클릭 리스너 설정
             Intent intent = new Intent(ACTION_REFRESH_CLICK);
             intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_MUTABLE);
             remoteViews.setOnClickPendingIntent(R.id.refresh_button, pendingIntent);
 
             //api 요청
@@ -85,20 +82,12 @@ public class AuctionWidget extends AppWidgetProvider {
     }
 
     @Override
-    public void onEnabled(Context context) {
-        // Enter relevant functionality for when the first widget is created
-    }
-
-    @Override
-    public void onDisabled(Context context) {
-        // Enter relevant functionality for when the last widget is disabled
-    }
-
-    @Override
     public void onReceive(Context context, Intent intent) {
         super.onReceive(context, intent);
 
-        if (intent.getAction().equals(ACTION_REFRESH_CLICK)) { // 액션 이름에 따라 처리
+        Log.d("Clicked", "Clicked");
+
+        if (intent.getAction().equals(ACTION_REFRESH_CLICK)) {
             // ImageButton가 클릭되었을 때 실행할 함수 호출
             int appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
             if (appWidgetId != AppWidgetManager.INVALID_APPWIDGET_ID) {
@@ -108,6 +97,7 @@ public class AuctionWidget extends AppWidgetProvider {
     }
 
     private void performApiRequest(Context context, int appWidgetId) {
+        Log.d("refresh", "refresh");
         String encodeItemName = "";
         try {
             encodeItemName = URLEncoder.encode(getItemName(context), "UTF-8");
@@ -132,7 +122,7 @@ public class AuctionWidget extends AppWidgetProvider {
                             String itemID = firstRow.getString("itemId");
 
                             // Glide를 사용하여 이미지 로드
-                            Glide.with(context)
+                            GlideApp.with(context)
                                     .asBitmap()
                                     .load("https://img-api.neople.co.kr/df/items/" + itemID)
                                     .into(new CustomTarget<Bitmap>() {
@@ -145,7 +135,7 @@ public class AuctionWidget extends AppWidgetProvider {
 
                                             // 위젯 업데이트
                                             AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-                                            appWidgetManager.updateAppWidget(appWidgetId, remoteViews);;
+                                            appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
                                         }
 
                                         @Override
@@ -181,6 +171,9 @@ public class AuctionWidget extends AppWidgetProvider {
                                 Integer unitPrice = firstRow.getInt("unitPrice");
                                 Integer avgPrice = firstRow.getInt("averagePrice");
                                 NumberFormat numberFormat = new DecimalFormat("#,###");
+
+                                Log.d("price", unitPrice.toString());
+                                Log.d("price", avgPrice.toString());
 
                                 // 위젯에 텍스트 설정
                                 RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.auction_widget);
