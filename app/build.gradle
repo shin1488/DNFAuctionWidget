@@ -9,7 +9,7 @@ android {
         applicationId "com.shin.dnfauctionwidget"
         minSdkVersion 24
         targetSdkVersion 33
-        versionCode 4
+        versionCode 5
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
