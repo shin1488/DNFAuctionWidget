@@ -19,9 +19,8 @@
 ![Untitled](./readme/Untitled.png)
 
 - 해당 프로젝트는 2023년 06월 29일 던전앤파이터 공식 홈페이지 “오늘의 던파”에 소개되었습니다.
-- 공식 홈페이지 게시물 링크 :
+- 공식 홈페이지 게시물 링크 : [액션쾌감!!! 던전앤파이터 - 아이템 경매장 최저가/평균가 확인 위젯 '던옥'](https://df.nexon.com/df/community/dnfboard?title_type=3&view_type=all&mode=view&no=2818761&job=99&grow_type=0)
 
-[액션쾌감!!! 던전앤파이터 - 아이템 경매장 최저가/평균가 확인 위젯 '던옥'](https://df.nexon.com/df/community/dnfboard?title_type=3&view_type=all&mode=view&no=2818761&job=99&grow_type=0)
 
 ![Untitled](./readme/Untitled%201.png)
 
@@ -30,10 +29,6 @@
 ![Untitled](./readme/Untitled%202.png)
 
 - 출시 첫 날인 2023년 06월 28일, 896건의 api 호출이 발생하였습니다.
-
-# 🐙 Github
-
-[GitHub - shin1488/DNFAuctionWidget](https://github.com/shin1488/DNFAuctionWidget)
 
 # 📝 주요 기능
 
