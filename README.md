@@ -5,9 +5,11 @@
 
 ### 2023년 06월 21일 ~ 2023년 06월 25일 (2023년 06월 28일 1.0 릴리즈)
 
-![그림1.png](./readme/icon_logo.png)
+![그림1.png](./readme/.png)
 
 # 💻 프로젝트 소개
+
+---
 
 ## `던옥` 이란?
 
@@ -16,21 +18,44 @@
 
 # ⭐ 평가 및 일일 사용자
 
+---
+
 ![Untitled](./readme/Untitled.png)
 
 - 해당 프로젝트는 2023년 06월 29일 던전앤파이터 공식 홈페이지 “오늘의 던파”에 소개되었습니다.
 - 공식 홈페이지 게시물 링크 : [액션쾌감!!! 던전앤파이터 - 아이템 경매장 최저가/평균가 확인 위젯 '던옥'](https://df.nexon.com/df/community/dnfboard?title_type=3&view_type=all&mode=view&no=2818761&job=99&grow_type=0)
 
-
 ![Untitled](./readme/Untitled%201.png)
 
 - 출시 직후, 던전앤파이터 관련 커뮤니티의 폭발적인 반응을 얻으며 6월 28일 등록된 게시물 중 추천수 1위를 달성하였습니다.
 
-![Untitled](./readme/Untitled%202.png)
+![api호출 횟수.png](./readme/api_count.png)
 
 - 출시 첫 날인 2023년 06월 28일, 896건의 api 호출이 발생하였습니다.
+- “오늘의 던파”에 소개된 2023년 06월 29일, 5439건의 api 호출로 마무리 지었습니다. (에러코드 503은 게임 점검 중 호출된 api)
+
+![첫날 설치 수.png](./readme/install_count.png)
+
+![노출 수.png](./readme/ad_view.png)
+
+- 첫째 날, 둘째 날 합하여 설치는 214건을 달성하였습니다.
+- 메인 액티비티 하단 배너의 광고 노출은 463건 발생하였습니다.
+
+# ▶️ Google Play
+
+---
+
+[던옥 - Apps on Google Play](https://play.google.com/store/apps/details?id=com.shin.dnfauctionwidget)
+
+# 🐙 Github
+
+---
+
+[GitHub - shin1488/DNFAuctionWidget](https://github.com/shin1488/DNFAuctionWidget)
 
 # 📝 주요 기능
+
+---
 
 ## 메인 액티비티
 
@@ -50,12 +75,16 @@
 
 # 🛠 사용된 기술
 
+---
+
 - Android / Java
 - Glide
 - Google AdMob
 - Volley
 
 # ✨ 배운 점
+
+---
 
 ## 위젯 개발 관련
 
@@ -65,14 +94,19 @@
 ## 어플리케이션 출시 관련
 
 - 이전에 진행했던 두 가지의 팀 프로젝트와는 달리, 실제 유저의 사용을 염두에 두고 제작한 어플리케이션이었기 때문에, Google Play Console을 통하여 Google Play에 출시 검토를 받고 있다.(2023-06-25 시점, 2023-06-28일에 출시 완료) 단순히 어플리케이션 제작만 하고 등록하는 것인 줄로만 알았으나, 생각보다 해야 할 과정들이 상당히 많아 의외로 고전했던 부분이다.
-- 특히 개인정보처리방침을 작성하여 제출해야 했기 때문에, 방법을 몰랐던 상황이라 어떻게 작성할지 막막하였다. 다행히도 검색을 하고 보니 개인정보 포털에서 해당 문서를 작성해 주는 서비스가 있어 이의 도움을 받아 나만의 개인정보처리방침을 작성하였다. 이는 [던옥 - 개인정보처리방침](https://shin-workspace.notion.site/shin-workspace/4fdb3dc1bf5d4a67b49b1161f00ed474) 에 작성해 두어 제출하였다.
+- 특히 개인정보처리방침을 작성하여 제출해야 했기 때문에, 방법을 몰랐던 상황이라 어떻게 작성할지 막막하였다. 다행히도 검색을 하고 보니 개인정보 포털에서 해당 문서를 작성해 주는 서비스가 있어 이의 도움을 받아 나만의 개인정보처리방침을 작성하였다. 이는 [던옥 - 개인정보처리방침](https://www.notion.so/4fdb3dc1bf5d4a67b49b1161f00ed474?pvs=21) 에 작성해 두어 제출하였다.
+- 릴리즈 후 실제 사용자의 의견을 들으면서, 최초 목적했던 어플리케이션에서 다양한 방법으로 발전시킬 수 있는 방법을 얻을 수 있었다. 가령,
+    - 위젯에 표시되는 아이템의 개수 증가
+    - 경매장에 특정 아이템이 등록되었을 때 푸시 알림
+    - 특정 아이템의 최저가가 일정 가격 이하로 떨어졌을 때 알림
+    
+    등의 의견 내지는 아이디어를 얻을 수 있는 좋은 경험이었다. 사용자들과 소통하며 ‘위젯에 표시되는 아이템의 개수 증가’ 항목에 대한 건은 업데이트를 약속했기에 빠른 시일 내에 기능을 추가하여 업데이트 할 것이다.
+    
 
 # 🏞️ 프로젝트 이미지
 
-![Screenshot_1687618454.png](./readme/Screenshot_1687618454.png)
+---
 
-![Screenshot_1687639671.png](./readme/Screenshot_1687639671.png)
+![슬라이드1.PNG](./readme/preview1.PNG)
 
-![Screenshot_1687639677.png](./readme/Screenshot_1687639677.png)
-
-![Screenshot_1687639684.png](./readme/Screenshot_1687639684.png)
+![슬라이드2.PNG](./readme/preview2.PNG)
